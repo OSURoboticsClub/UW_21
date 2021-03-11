@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 import path_algo as pa
 
+cap = cv2.VideoCapture(0)
+
 while True:
     ret, frame = cap.read()
     cols, rows, _ = frame.shape

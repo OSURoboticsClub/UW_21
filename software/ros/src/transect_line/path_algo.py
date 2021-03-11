@@ -1,8 +1,6 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(0)
-
 def isolate_color(lower, upper, hsvFrame, frame):
     """
     @param
