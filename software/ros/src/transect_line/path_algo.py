@@ -20,17 +20,19 @@ def isolate_color(lower, upper, hsvFrame, frame):
     ret = cv2.bitwise_and(frame, frame, mask=mask)
     return mask, ret
 
-def get_line(frame, mask):
+def get_line(frame, mask, margin=(0,1)):
     """
     @param
         - frame : frame of image
         - mask : color mask
+        - margin : default full frame, change to look only at certain region of frame
     @in function
         - draw the longest line in the color mask
     @return
         - attr : (x_start, y_start, height) of the line
     """
-    contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    left, right = int(frame.shape[1] * margin[0]), int(frame.shape[1] * margin[1])
+    contours, hierarchy = cv2.findContours(mask[:,left:right], cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     mx_h, attr = -1, None
     for c in contours:
         x, y, w, h = cv2.boundingRect(c)
@@ -78,7 +80,7 @@ def check_bounds(frame, bounds, esize):
     center = get_mid(*bounds[0])
     hsvFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     blue_mask, _ = isolate_color(np.array([94, 80, 2], np.uint8), np.array([120, 255, 255], np.uint8), hsvFrame, frame)
-    x, y, h = get_line(frame, blue_mask)
+    x, y, h = get_line(frame, blue_mask, margin=(0,0.5))
 
     if (x < center - esize):
         return (1, "right")
@@ -86,6 +88,7 @@ def check_bounds(frame, bounds, esize):
         return (-1, "left")
     else:
         return (0, "stay")
+
 
 while True:
     ret, frame = cap.read()
