@@ -88,21 +88,3 @@ def check_bounds(frame, bounds, esize):
         return (-1, "left")
     else:
         return (0, "stay")
-
-
-while True:
-    ret, frame = cap.read()
-    cols, rows, _ = frame.shape
-    buffer = int(rows * 0.1)
-    split_size = int((rows - (2 * buffer)) / 3)
-    bounds = draw_grid(frame, split_size, 5, buffer)
-    ret = check_bounds(frame, bounds, 20)
-    print(ret)
-    cv2.imshow('frame', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-
-cap.release()
-cv2.destroyAllWindows()
-
