@@ -1,3 +1,5 @@
+# Author: Sebastian Hardin    hardinse@oregonstate.edu
+
 #!/usr/bin/env python
 PKG = 'input_recorder'
 import roslib; roslib.load_manifest(PKG)
