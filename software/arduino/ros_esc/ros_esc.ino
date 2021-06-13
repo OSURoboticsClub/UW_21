@@ -1,3 +1,7 @@
+/*
+  Author: Sebastian Hardin    hardinse@oregonstate.edu
+*/
+
 #include <ros.h>
 #include <std_msgs/Int16MultiArray.h>
 #include "ESC.h"
